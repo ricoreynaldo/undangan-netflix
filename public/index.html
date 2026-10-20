@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>The Wedding</title>
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="locked">
+
+  <!-- ============ INTRO (monogram "ta-dum") ============ -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-mark" data-monogram></div>
+  </div>
+
+  <!-- ============ COVER: SIAPA YANG MENONTON? ============ -->
+  <section id="cover" class="profiles">
+    <p class="wordmark profiles-brand" data-text="brand"></p>
+    <div class="profiles-body">
+      <h1 class="profiles-title">Siapa yang menonton?</h1>
+      <div class="profile-list" id="profileList">
+        <button class="profile is-guest" type="button" data-open>
+          <span class="avatar" data-avatar="guest"></span>
+          <span class="profile-name" id="guestName"></span>
+          <span class="profile-role">Tamu Undangan</span>
+        </button>
+        <button class="profile" type="button" data-open>
+          <span class="avatar" data-avatar="groom"></span>
+          <span class="profile-name" data-short="0"></span>
+          <span class="profile-role">Mempelai Pria</span>
+        </button>
+        <button class="profile" type="button" data-open>
+          <span class="avatar" data-avatar="bride"></span>
+          <span class="profile-name" data-short="1"></span>
+          <span class="profile-role">Mempelai Wanita</span>
+        </button>
+      </div>
+      <button class="btn btn-outline" id="openBtn" type="button" data-open>Buka Undangan</button>
+      <p class="profiles-note">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di hari bahagia kami.</p>
+    </div>
+  </section>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="nav" id="nav">
+    <a class="wordmark" href="#top" data-text="brand"></a>
+    <nav class="nav-links" aria-label="Bagian undangan">
+      <a href="#top">Beranda</a>
+      <a href="#cast">Pemeran</a>
+      <a href="#episodes">Episode</a>
+      <a href="#schedule">Jadwal</a>
+      <a href="#moments">Momen</a>
+      <a href="#rsvp">Ulasan</a>
+      <a href="#gift">Hadiah</a>
+    </nav>
+    <span class="nav-avatar" data-avatar="guest" title="Profil tamu"></span>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ BILLBOARD ============ -->
+    <section class="billboard" id="top">
+      <div class="bb-bg" data-photo="hero.photo"></div>
+      <div class="bb-shade"></div>
+      <div class="bb-content">
+        <p class="bb-label"><b class="mark" data-mark></b><span data-text="hero.label"></span></p>
+        <h1 class="bb-title" data-names></h1>
+        <p class="top10" id="rank" hidden><span class="top10-badge">TOP<b>10</b></span><span data-text="hero.rank"></span></p>
+        <p class="meta">
+          <span class="match" data-text="hero.match"></span>
+          <span data-text="hero.year"></span>
+          <span class="age" data-text="hero.rating"></span>
+          <span data-text="hero.seasons"></span>
+          <span class="hd">HD</span>
+        </p>
+        <p class="synopsis" data-text="hero.tagline"></p>
+        <div class="bb-actions">
+          <button class="btn btn-play" id="playBtn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v16l14-8z" fill="currentColor"/></svg>
+            Putar
+          </button>
+          <a class="btn btn-info" href="#detail">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10.5v6M12 7.2v.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            Selengkapnya
+          </a>
+        </div>
+        <div class="premiere">
+          <p class="premiere-label">Tayang perdana dalam</p>
+          <div class="countdown" id="countdown">
+            <div><b data-cd="d">00</b><span>Hari</span></div>
+            <div><b data-cd="h">00</b><span>Jam</span></div>
+            <div><b data-cd="m">00</b><span>Menit</span></div>
+            <div><b data-cd="s">00</b><span>Detik</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DETAIL ============ -->
+    <section class="sec" id="detail">
+      <div class="wrap detail-grid">
+        <blockquote class="quote reveal">
+          <p data-text="quote.text"></p>
+          <cite data-text="quote.source"></cite>
+        </blockquote>
+        <dl class="facts reveal">
+          <div><dt>Pemeran:</dt><dd id="factCast"></dd></div>
+          <div><dt>Genre:</dt><dd id="factGenre"></dd></div>
+          <div><dt>Acara ini:</dt><dd id="factMood"></dd></div>
+          <div><dt>Tayang:</dt><dd data-text="dateLabel"></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ CAST ============ -->
+    <section class="sec" id="cast">
+      <div class="wrap">
+        <h2 class="row-title reveal">Pemeran Utama</h2>
+        <div class="cast-grid">
+          <article class="cast reveal">
+            <div class="cast-photo"><img data-photo="couple.groom.photo" alt="Mempelai pria" /></div>
+            <div class="cast-meta">
+              <span class="badge">Mempelai Pria</span>
+              <h3 class="cast-name" data-text="couple.groom.name"></h3>
+              <p class="cast-parents" data-text="couple.groom.parents"></p>
+            </div>
+          </article>
+          <article class="cast reveal">
+            <div class="cast-photo"><img data-photo="couple.bride.photo" alt="Mempelai wanita" /></div>
+            <div class="cast-meta">
+              <span class="badge">Mempelai Wanita</span>
+              <h3 class="cast-name" data-text="couple.bride.name"></h3>
+              <p class="cast-parents" data-text="couple.bride.parents"></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EPISODES (STORY) ============ -->
+    <section class="sec" id="episodes">
+      <div class="wrap">
+        <header class="row-head reveal">
+          <h2 class="row-title">Episode</h2>
+          <span class="season" data-text="season"></span>
+        </header>
+        <ol class="episodes" id="story"></ol>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULE (EVENTS) ============ -->
+    <section class="sec" id="schedule">
+      <div class="wrap">
+        <header class="row-head reveal">
+          <h2 class="row-title">Jadwal Tayang</h2>
+          <p class="row-sub">Merupakan suatu kehormatan bagi kami apabila Anda berkenan hadir.</p>
+        </header>
+        <div class="events" id="events"></div>
+      </div>
+    </section>
+
+    <!-- ============ TOP 10 MOMEN (GALLERY) ============ -->
+    <section class="sec" id="moments">
+      <div class="wrap">
+        <header class="row-head reveal">
+          <h2 class="row-title">Top 10 Momen Kami</h2>
+          <span class="season" id="frameCount"></span>
+        </header>
+      </div>
+      <div class="slider reveal">
+        <button class="slider-arrow prev" type="button" aria-label="Geser ke kiri">‹</button>
+        <div class="slider-track" id="gallery"></div>
+        <button class="slider-arrow next" type="button" aria-label="Geser ke kanan">›</button>
+      </div>
+    </section>
+
+    <!-- ============ RSVP + GUESTBOOK ============ -->
+    <section class="sec" id="rsvp">
+      <div class="wrap rsvp-grid">
+        <div class="reveal">
+          <header class="row-head stack">
+            <h2 class="row-title">Beri Ulasan</h2>
+            <p class="row-sub">Konfirmasi kehadiran & tinggalkan ucapan untuk kedua mempelai.</p>
+          </header>
+          <form class="rsvp" id="rsvpForm" novalidate>
+            <label class="field">
+              <span>Nama</span>
+              <input name="name" id="rsvpName" maxlength="60" autocomplete="name" required />
+            </label>
+            <div class="field">
+              <span>Konfirmasi kehadiran</span>
+              <div class="choice">
+                <label><input type="radio" name="attendance" value="hadir" /><em>👍 Hadir</em></label>
+                <label><input type="radio" name="attendance" value="tidak" /><em>🙏 Berhalangan</em></label>
+              </div>
+            </div>
+            <label class="field" id="guestsField">
+              <span>Jumlah tamu</span>
+              <select name="guests">
+                <option value="1">1 orang</option>
+                <option value="2">2 orang</option>
+                <option value="3">3 orang</option>
+                <option value="4">4 orang</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Ucapan & doa</span>
+              <textarea name="message" rows="4" maxlength="500" placeholder="Tulis ulasan terbaikmu untuk episode ini…"></textarea>
+            </label>
+            <p class="form-msg" id="rsvpMsg" role="status"></p>
+            <button class="btn btn-red" type="submit">Kirim Ulasan</button>
+          </form>
+        </div>
+
+        <div class="guestbook reveal">
+          <div class="gb-head">
+            <h3 class="row-title">Ulasan Penonton</h3>
+            <p class="gb-stats" id="gbStats"></p>
+          </div>
+          <ul class="wishes" id="wishes"></ul>
+          <button class="btn btn-info small" id="moreWishes" type="button" hidden>Lihat lebih banyak</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GIFT ============ -->
+    <section class="sec" id="gift">
+      <div class="wrap">
+        <header class="row-head stack reveal">
+          <h2 class="row-title">Kirim Hadiah</h2>
+          <p class="row-sub">Doa restu Anda adalah hadiah terindah. Namun jika ingin berbagi tanda kasih, kami menerimanya dengan penuh syukur.</p>
+        </header>
+        <div class="gifts" id="gifts"></div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING ============ -->
+    <footer class="closing">
+      <div class="wrap reveal">
+        <p class="closing-eyebrow">Terima kasih sudah menonton</p>
+        <h2 class="closing-title" data-names></h2>
+        <p class="closing-text" data-text="closing"></p>
+        <a class="btn btn-play" href="#top">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z" fill="currentColor"/></svg>
+          Tonton Ulang
+        </a>
+        <p class="credits">Made with pride · HEAVEN</p>
+        <a class="wa-tag" id="waTag" target="_blank" rel="noopener" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24s8.24 3.7 8.24 8.24-3.7 8.24-8.24 8.24Zm4.52-6.17c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.12-1.04-.38-1.99-1.23-.73-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg>
+          <span></span>
+        </a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Music toggle -->
+  <button class="music" id="musicBtn" type="button" aria-label="Putar / jeda musik" hidden>
+    <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor"/></svg>
+  </button>
+  <audio id="bgm" loop preload="none"></audio>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" type="button" aria-label="Tutup">×</button>
+    <button class="lb-nav prev" type="button" aria-label="Sebelumnya">‹</button>
+    <img alt="" />
+    <button class="lb-nav next" type="button" aria-label="Berikutnya">›</button>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script type="module" src="js/db.js"></script>
+</body>
+</html>
