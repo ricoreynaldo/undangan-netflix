@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<!-- Sumber thumbnail katalog (1200×1500, 4:5). Render ulang: buka di Chrome 1200×1500 lalu screenshot. -->
+<title>Thumbnail — Undangan Netflix</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --red: #e50914; --bg: #0b0b0b; --muted: #a3a3a3; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 1500px; background: var(--bg); overflow: hidden; }
+  body { font-family: 'Figtree', system-ui, sans-serif; color: #fff; position: relative; }
+
+  /* latar: cahaya merah + berkas sorot seperti intro */
+  .glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(70% 46% at 50% 36%, rgba(229, 9, 20, .55) 0%, rgba(229, 9, 20, 0) 70%),
+      radial-gradient(60% 40% at 85% 0%, rgba(178, 7, 16, .5) 0%, rgba(178, 7, 16, 0) 70%),
+      radial-gradient(70% 40% at 10% 100%, rgba(120, 4, 10, .55) 0%, rgba(120, 4, 10, 0) 70%),
+      linear-gradient(180deg, #160304 0%, #0b0b0b 55%, #070707 100%);
+  }
+  .beams { position: absolute; inset: -10% 0 auto; height: 70%; display: flex; justify-content: center; gap: 22px; transform: perspective(900px) rotateX(38deg); transform-origin: 50% 0; opacity: .5; }
+  .beams i { width: 16px; background: linear-gradient(180deg, rgba(255, 60, 70, .0), rgba(255, 40, 50, .55) 45%, rgba(255, 40, 50, 0)); filter: blur(1px); }
+  .beams i:nth-child(odd) { width: 8px; opacity: .6; }
+  .grain { position: absolute; inset: 0; opacity: .07; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 4px 4px; mix-blend-mode: overlay; }
+  .vignette { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(0, 0, 0, .75)); }
+
+  .wrap { position: absolute; inset: 0; padding: 70px 84px 76px; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .brand { font: 400 54px/1 'Bebas Neue', sans-serif; color: var(--red); letter-spacing: 1px; text-shadow: 0 4px 24px rgba(229, 9, 20, .45); }
+  .nav-av { width: 54px; height: 54px; border-radius: 6px; background: #2f80ed; }
+  .nav-av svg, .av svg { display: block; width: 100%; height: 100%; }
+
+  .hero { margin-top: auto; }
+  .series { display: flex; align-items: center; gap: 14px; font: 700 22px/1 'Figtree'; letter-spacing: 12px; color: #e5e5e5; }
+  .series b { font: 400 66px/.8 'Bebas Neue'; color: var(--red); letter-spacing: 0; }
+  .title { font: 400 236px/.84 'Bebas Neue', sans-serif; letter-spacing: 2px; margin: 18px 0 0 -6px; text-shadow: 0 10px 40px rgba(0, 0, 0, .55); }
+  .title span { display: block; }
+  .title em { font-style: normal; color: var(--red); font-size: .5em; vertical-align: .62em; margin: 0 14px 0 4px; }
+  .rank { display: flex; align-items: center; gap: 18px; margin-top: 26px; font: 700 34px/1.1 'Figtree'; }
+  .top10 { width: 54px; height: 60px; background: var(--red); border-radius: 4px; display: grid; place-items: center; align-content: center; line-height: .9; }
+  .top10 small { font: 800 12px 'Figtree'; letter-spacing: 1px; }
+  .top10 b { font: 400 34px 'Bebas Neue'; }
+  .meta { display: flex; align-items: center; gap: 18px; margin-top: 22px; font: 600 26px 'Figtree'; color: #d6d6d6; }
+  .meta .match { color: #46d369; font-weight: 800; }
+  .meta .box { border: 2px solid #8c8c8c; padding: 0 10px; border-radius: 4px; font-size: 20px; line-height: 32px; }
+  .tag { margin-top: 24px; max-width: 900px; font: 400 27px/1.5 'Figtree'; color: #e1e1e1; }
+  .btns { display: flex; gap: 18px; margin-top: 34px; }
+  .btn { display: inline-flex; align-items: center; gap: 14px; padding: 0 40px; height: 82px; border-radius: 8px; font: 700 30px 'Figtree'; }
+  .btn svg { width: 38px; height: 38px; }
+  .btn.play { background: #fff; color: #000; }
+  .btn.info { background: rgba(109, 109, 110, .75); color: #fff; }
+
+  .premiere { margin-top: 52px; }
+  .premiere p { font: 700 18px 'Figtree'; letter-spacing: 6px; color: var(--muted); text-transform: uppercase; }
+  .cd { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 18px; }
+  .cd div { border-left: 4px solid var(--red); padding: 4px 0 2px 26px; }
+  .cd b { display: block; font: 400 84px/1 'Bebas Neue'; }
+  .cd span { font: 700 16px 'Figtree'; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; }
+
+  .who { display: flex; align-items: center; justify-content: space-between; margin-top: 54px; padding-top: 34px; border-top: 1px solid rgba(255, 255, 255, .14); }
+  .who-text { font: 600 26px 'Figtree'; color: #e5e5e5; }
+  .who-text small { display: block; font: 700 17px 'Figtree'; letter-spacing: 5px; color: var(--muted); text-transform: uppercase; margin-top: 8px; }
+  .avs { display: flex; gap: 18px; }
+  .av { width: 88px; height: 88px; border-radius: 8px; overflow: hidden; }
+  .av.on { outline: 4px solid #fff; outline-offset: 4px; }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="beams" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">WEDDINGFLIX</div>
+      <div class="nav-av" data-face></div>
+    </div>
+
+    <div class="hero">
+      <div class="series"><b>W</b>SERIES</div>
+      <h1 class="title"><span>RAKA<em>&amp;</em></span><span>NADIA</span></h1>
+      <div class="rank"><div class="top10"><small>TOP</small><b>10</b></div>No. 1 di Pernikahan Hari Ini</div>
+      <div class="meta"><span class="match">99% Cocok</span><span>2026</span><span class="box">SU</span><span>1 Musim</span><span class="box">HD</span></div>
+      <p class="tag">Dua orang asing, satu pesan singkat, dan ribuan hari penuh tawa. Saksikan episode paling ditunggu dari kisah kami.</p>
+      <div class="btns">
+        <span class="btn play"><svg viewBox="0 0 24 24"><path d="M6 4v16l14-8z" fill="currentColor"/></svg>Putar</span>
+        <span class="btn info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 10.5v6M12 7.2v.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Selengkapnya</span>
+      </div>
+
+      <div class="premiere">
+        <p>Tayang perdana · 12 · 12 · 2026</p>
+        <div class="cd">
+          <div><b>52</b><span>Hari</span></div>
+          <div><b>17</b><span>Jam</span></div>
+          <div><b>44</b><span>Menit</span></div>
+          <div><b>59</b><span>Detik</span></div>
+        </div>
+      </div>
+
+      <div class="who">
+        <div class="who-text">Siapa yang menonton?<small>Undangan digital · Tema Netflix</small></div>
+        <div class="avs">
+          <div class="av on" style="background:#2f80ed" data-face></div>
+          <div class="av" style="background:#f5b800" data-face></div>
+          <div class="av" style="background:#e50914" data-face></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const face = '<svg viewBox="0 0 100 100"><rect x="28" y="30" width="9" height="16" rx="4.5" fill="#fff"/><rect x="63" y="30" width="9" height="16" rx="4.5" fill="#fff"/><path d="M27 60c6 11 14 16 23 16s17-5 23-16" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>';
+    document.querySelectorAll('[data-face]').forEach((el) => { el.innerHTML = face; });
+  </script>
+</body>
+</html>

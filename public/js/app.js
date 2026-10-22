@@ -15,7 +15,9 @@
   $$('[data-text]').forEach((el) => { el.textContent = get(el.dataset.text) ?? ''; });
   $$('[data-short]').forEach((el) => { el.textContent = C.couple.short[el.dataset.short] ?? ''; });
   $$('[data-names]').forEach((el) => {
-    el.innerHTML = `${esc(nameA)}<em class="amp">&amp;</em>${esc(nameB)}`;
+    el.innerHTML = el.classList.contains('bb-title')
+      ? `<span>${esc(nameA)}</span><span class="title-second"><em class="amp">&amp;</em>${esc(nameB)}</span>`
+      : `${esc(nameA)}<em class="amp">&amp;</em>${esc(nameB)}`;
   });
   $$('[data-mark]').forEach((el) => { el.textContent = (C.brand || 'W').trim().charAt(0); });
   $$('[data-monogram]').forEach((el) => {
@@ -50,6 +52,7 @@
     if (!src) return fail();
     img.addEventListener('error', fail, { once: true });
     img.loading = 'lazy';
+    img.decoding = 'async';
     img.src = src;
   }
   function setBg(el, src) {
@@ -66,7 +69,9 @@
 
   // ---------- nama tamu (?to=Nama) ----------
   const guest = new URLSearchParams(location.search).get('to');
-  $('#guestName').textContent = guest ? guest.slice(0, 60) : C.cover.defaultGuest;
+  const guestName = guest?.trim().slice(0, 60) || C.cover.defaultGuest;
+  $('#guestName').textContent = guestName;
+  $$('[data-guest]').forEach((el) => { el.textContent = guestName; });
   if (guest) $('#rsvpName').value = guest.slice(0, 60);
 
   // ---------- intro "ta-dum" ----------
@@ -93,7 +98,12 @@
 
   // ---------- buka undangan (pilih profil) ----------
   const cover = $('#cover');
+  const main = $('#main');
+  const pageNav = $('#nav');
+  main.inert = true;
+  pageNav.inert = true;
   let opened = false;
+  let coverTimer;
   function openInvitation(profile) {
     if (opened) return;
     opened = true;
@@ -103,11 +113,27 @@
       cover.classList.add('opened');
       document.body.classList.remove('locked');
       document.documentElement.classList.add('started');
+      main.inert = false;
+      pageNav.inert = false;
+      cover.inert = true;
       window.scrollTo(0, 0);
-      setTimeout(() => { cover.style.display = 'none'; }, 900);
+      main.focus({ preventScroll: true });
+      coverTimer = setTimeout(() => { cover.style.display = 'none'; }, 900);
     }, reduceMotion ? 0 : 380);
   }
   $$('[data-open]', cover).forEach((b) => b.addEventListener('click', () => openInvitation(b.closest('.profile'))));
+  $('#profileBtn').addEventListener('click', () => {
+    clearTimeout(coverTimer);
+    opened = false;
+    cover.style.display = '';
+    cover.classList.remove('opened');
+    cover.inert = false;
+    main.inert = true;
+    pageNav.inert = true;
+    document.body.classList.add('locked');
+    $$('.profile', cover).forEach((el) => el.classList.remove('picked'));
+    $('#openBtn').focus();
+  });
 
   $('#playBtn').addEventListener('click', () => {
     playMusic();
@@ -123,7 +149,11 @@
   const navIO = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (!en.isIntersecting) return;
-      navLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${en.target.id}`));
+      navLinks.forEach((a) => {
+        const active = a.getAttribute('href') === `#${en.target.id}`;
+        a.classList.toggle('active', active);
+        if (active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+      });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
   navLinks.forEach((a) => { const sec = $(a.getAttribute('href')); if (sec) navIO.observe(sec); });
@@ -144,12 +174,26 @@
   tick();
   setInterval(tick, 1000);
 
+  // ---------- pilihan konten: pintasan seperti katalog streaming ----------
+  const browse = [
+    { href: '#cast', title: 'Pemeran Utama', subtitle: `${nameA} & ${nameB}`, photo: C.couple.groom.photo, tag: 'KENALI KAMI' },
+    { href: '#episodes', title: 'Kisah Kita', subtitle: `${C.story?.length || 0} episode · Romantis`, photo: C.story?.[0]?.photo, tag: 'SERIES' },
+    { href: '#schedule', title: 'Hari Bahagia', subtitle: C.dateLabel, photo: C.story?.[3]?.photo || C.hero.photo, tag: 'SEGERA TAYANG' },
+    { href: '#moments', title: 'Momen Kita', subtitle: 'Kenangan yang tak terulang', photo: C.gallery?.[1], tag: 'TOP 10' },
+    { href: '#rsvp', title: 'Anda Diundang', subtitle: 'Jadilah bagian dari cerita', photo: C.gallery?.[4], tag: 'SPESIAL UNTUKMU' },
+  ];
+  $('#browse').innerHTML = browse.map((item) => `
+    <a class="browse-card" href="${item.href}">
+      <div class="browse-art"><img alt="" /><span class="card-mark" aria-hidden="true">${esc((C.brand || 'W').charAt(0))}</span><span class="browse-tag">${esc(item.tag)}</span><h3>${esc(item.title)}</h3><span class="browse-play" aria-hidden="true">▶</span></div>
+      <p>${esc(item.subtitle)}</p>
+    </a>`).join('');
+  $$('#browse img').forEach((img, i) => setPhoto(img, browse[i].photo));
+
   // ---------- episodes (story) ----------
-  const playSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>';
   $('#story').innerHTML = (C.story || []).map((s, i) => `
     <li class="ep reveal">
       <span class="ep-num">${i + 1}</span>
-      <div class="ep-thumb"><img alt="" /><span class="ep-play"><i>${playSvg}</i></span></div>
+      <div class="ep-thumb"><img alt="${esc(s.title)}" /></div>
       <div class="ep-body">
         <div class="ep-top"><h3 class="ep-title">${esc(s.title)}</h3><span class="ep-year">${esc(s.year)}</span></div>
         <p class="ep-text">${esc(s.text)}</p>
@@ -197,11 +241,12 @@
   // ---------- top 10 momen (gallery) + lightbox ----------
   const gal = $('#gallery');
   const shots = C.gallery || [];
-  $('#frameCount').textContent = `${shots.length} Momen`;
+  const captions = C.galleryCaptions || [];
+  $('#frameCount').textContent = `${shots.length} momen · Geser untuk menjelajah`;
   gal.innerHTML = shots.map((_, i) => `
-    <button type="button" class="top-item" data-i="${i}" aria-label="Buka foto ${i + 1}">
+    <button type="button" class="top-item" data-i="${i}" aria-label="Buka foto ${i + 1}${captions[i] ? ': ' + esc(captions[i]) : ''}">
       <span class="rank" aria-hidden="true">${i + 1}</span>
-      <span class="poster"><img alt="Momen ${i + 1}" /></span>
+      <span class="poster"><img alt="${esc(captions[i] || 'Momen ' + (i + 1))}" /><span class="card-mark" aria-hidden="true">${esc((C.brand || 'W').charAt(0))}</span><span class="poster-caption"><small>KISAH KITA</small><strong>${esc(captions[i] || 'Momen ' + (i + 1))}</strong></span><span class="poster-ribbon">MOMEN PILIHAN</span></span>
     </button>`).join('');
   $$('.poster img', gal).forEach((img, i) => setPhoto(img, shots[i]));
 
@@ -220,33 +265,58 @@
   const lb = $('#lightbox');
   const lbImg = $('img', lb);
   let cur = 0;
+  let lbTrigger;
   const available = () => $$('.top-item', gal).filter((b) => !b.querySelector('.ph')).map((b) => Number(b.dataset.i));
+  function updateLightbox() {
+    lbImg.src = shots[cur];
+    lbImg.alt = captions[cur] || `Momen ${cur + 1}`;
+    $('#lbCaption').textContent = `${cur + 1} / ${shots.length} · ${lbImg.alt}`;
+  }
   function show(i) {
     const list = available();
     if (!list.length) return;
     cur = list.includes(i) ? i : list[0];
-    lbImg.src = shots[cur];
+    lbTrigger = document.activeElement;
+    updateLightbox();
     lb.hidden = false;
+    main.inert = true;
+    pageNav.inert = true;
+    document.body.classList.add('lightbox-open');
+    $('.lb-close', lb).focus();
   }
   function step(d) {
     const list = available();
     const pos = list.indexOf(cur);
     cur = list[(pos + d + list.length) % list.length];
-    lbImg.src = shots[cur];
+    updateLightbox();
+  }
+  function closeLightbox() {
+    lb.hidden = true;
+    main.inert = false;
+    pageNav.inert = false;
+    document.body.classList.remove('lightbox-open');
+    lbTrigger?.focus({ preventScroll: true });
   }
   gal.addEventListener('click', (e) => {
     const b = e.target.closest('.top-item');
     if (b && !b.querySelector('.ph')) show(Number(b.dataset.i));
   });
-  $('.lb-close', lb).addEventListener('click', () => { lb.hidden = true; });
+  $('.lb-close', lb).addEventListener('click', closeLightbox);
   $('.lb-nav.prev', lb).addEventListener('click', () => step(-1));
   $('.lb-nav.next', lb).addEventListener('click', () => step(1));
-  lb.addEventListener('click', (e) => { if (e.target === lb) lb.hidden = true; });
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
   document.addEventListener('keydown', (e) => {
     if (lb.hidden) return;
-    if (e.key === 'Escape') lb.hidden = true;
+    if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'Tab') {
+      const buttons = $$('button', lb);
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 
   // ---------- gift ----------

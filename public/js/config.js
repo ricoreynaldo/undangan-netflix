@@ -13,12 +13,12 @@ window.INVITATION = {
     groom: {
       name: 'Raka Pratama Aditya, S.Kom.',
       parents: 'Putra kedua dari Bapak Hendra Wijaya & Ibu Sri Lestari',
-      photo: 'images/groom.jpg',
+      photo: 'img-undangan/61d0d79a7753b69f3e143795836a8153.jpg',
     },
     bride: {
       name: 'Nadia Putri Maharani, S.Psi.',
       parents: 'Putri pertama dari Bapak Agus Santoso & Ibu Dewi Kartika',
-      photo: 'images/bride.jpg',
+      photo: 'img-undangan/a843abd1f4f511a3b717402a0b48a006.jpg',
     },
   },
 
@@ -31,14 +31,14 @@ window.INVITATION = {
   },
 
   hero: {
-    photo: 'images/hero.jpg',
+    photo: 'img-undangan/45c3f0078259ab963014c4d835a8c48e.jpg',
     label: 'SERIES',                       // teks di samping huruf merah di atas judul
     rank: 'No. 1 di Pernikahan Hari Ini',  // badge Top 10 — '' untuk menyembunyikan
     match: '99% Cocok',
     year: '2026',
     rating: 'SU',
     seasons: '1 Musim',
-    tagline: 'Dua orang asing, satu pesan singkat, dan ribuan hari penuh tawa. Saksikan episode paling ditunggu dari kisah kami — dan jadilah bagian dari momen tayang perdananya.',
+    tagline: 'Berawal dari satu pesan, berlanjut menjadi selamanya. Saksikan kisah kami menuju episode terbaiknya. Kali ini, Anda juga ada di dalam ceritanya.',
   },
 
   // Panel detail di bawah billboard
@@ -58,25 +58,25 @@ window.INVITATION = {
     {
       title: 'Pilot: Salah Kirim Pesan',
       year: '2019',
-      photo: 'images/ep-1.jpg',
+      photo: 'img-undangan/d0defbbc7f6b72c5f8f8f7620ad5691a.jpg',
       text: 'Semua berawal dari pesan yang salah kirim di grup kepanitiaan kampus. Bukannya canggung, obrolan itu justru berlanjut sampai larut malam.',
     },
     {
       title: 'Kopi Pertama',
       year: '2020',
-      photo: 'images/ep-2.jpg',
+      photo: 'img-undangan/a751177140d9a863db5f558a5c12d23a.jpg',
       text: 'Pertemuan pertama di sebuah kedai kopi kecil. Rencananya satu jam, kenyataannya lima jam — dan kami sama-sama tahu ini bukan pertemuan terakhir.',
     },
     {
       title: 'Jarak Bukan Alasan',
       year: '2022',
-      photo: 'images/ep-3.jpg',
+      photo: 'img-undangan/0a400eaa1f10a7e4a12e079a7f321df1.jpg',
       text: 'Pekerjaan memisahkan kota kami. Panggilan video setiap malam menjadi saksi bahwa rindu bisa dirawat, dan percaya bisa dijaga.',
     },
     {
       title: 'Season Finale: Lamaran',
       year: '2026',
-      photo: 'images/ep-4.jpg',
+      photo: 'img-undangan/0a2085c735ff185d105bef9eb93f3b47.jpg',
       text: 'Dengan restu kedua keluarga, kami resmi melangkah ke babak baru. Episode berikutnya? Seumur hidup — dan kami ingin kamu ikut menyaksikannya.',
     },
   ],
@@ -111,15 +111,18 @@ window.INVITATION = {
 
   // Galeri tampil sebagai baris "Top 10" (poster 2:3)
   gallery: [
-    'images/gallery-1.jpg',
-    'images/gallery-2.jpg',
-    'images/gallery-3.jpg',
-    'images/gallery-4.jpg',
-    'images/gallery-5.jpg',
-    'images/gallery-6.jpg',
-    'images/gallery-7.jpg',
-    'images/gallery-8.jpg',
+    'img-undangan/45c3f0078259ab963014c4d835a8c48e.jpg',
+    'img-undangan/d0defbbc7f6b72c5f8f8f7620ad5691a.jpg',
+    'img-undangan/a751177140d9a863db5f558a5c12d23a.jpg',
+    'img-undangan/6fe3e4aa5d48be2166de719e3831f568.jpg',
+    'img-undangan/a843abd1f4f511a3b717402a0b48a006.jpg',
+    'img-undangan/af8229644236640067d2be790fe9a79a.jpg',
+    'img-undangan/0a400eaa1f10a7e4a12e079a7f321df1.jpg',
+    'img-undangan/0a2085c735ff185d105bef9eb93f3b47.jpg',
+    'img-undangan/61d0d79a7753b69f3e143795836a8153.jpg',
+    'img-undangan/d0defbbc7f6b72c5f8f8f7620ad5691a.jpg',
   ],
+  galleryCaptions: ['Di Dekatmu', 'Langkah Bersama', 'Saling Menggenggam', 'Janji Kita', 'Hari Bahagia', 'Rumah Itu Kamu', 'Perjalanan Kita', 'Selamanya', 'Di Bawah Langit', 'Awal yang Baru'],
 
   gift: {
     // Rekening & e-wallet — tambah / hapus baris sesuai kebutuhan.
